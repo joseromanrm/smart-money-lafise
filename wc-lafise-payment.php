@@ -64,6 +64,12 @@ class Lafise_Payment_Gateway extends WC_Payment_Gateway_CC {
         'desc_tip'  => __( 'Merchant ID para integración del comercio electrónico.', 'lafise-payment' ),
         'default' => '',
       ),
+      'terminal_id' => array(
+        'title'   => __( 'Terminal ID', 'lafise-payment' ),
+        'type'    => 'text',
+        'desc_tip'  => __( 'Terminal ID para integración del comercio electrónico.', 'lafise-payment' ),
+        'default' => '',
+      ),
     );    
   }
 
@@ -78,6 +84,7 @@ class Lafise_Payment_Gateway extends WC_Payment_Gateway_CC {
     $l_user = $this->l_user;
     $l_pass = $this->l_pass;
     $merchant_id = $this->merchant_id;
+    $terminal_id = $this->terminal_id;
 
     $payload = array(
       "user"  => $l_user,
@@ -130,6 +137,7 @@ class Lafise_Payment_Gateway extends WC_Payment_Gateway_CC {
         //floatval( preg_replace( '#[^\d.]#', '', $woocommerce->cart->get_cart_total() ) )
         "commerceID" => (int)$merchant_id,
         "comment" => $coment,
+        "terminalID" => $terminal_id
       );
   
       $response_payment = wp_remote_post( $environment_url, array(
